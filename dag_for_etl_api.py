@@ -28,7 +28,7 @@ with DAG(
         import json
 
         url = ('http://universities.hipolabs.com/search?country=Kazakhstan')
-        response = r.get()
+        response = r.get(url)
         if response.status_code == 200:
             return response.json()
 
