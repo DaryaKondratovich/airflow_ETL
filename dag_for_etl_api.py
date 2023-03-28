@@ -52,7 +52,7 @@ with DAG(
         engine = create_engine('postgresql://postgres:postgres@localhost:5432/postgres')
         engine.connect()
         df2.head(n=0).to_sql(name = 'education_kz', con=engine, if_exists='replace')
-        return table == df2.to_sql(name = 'education_kz', con=engine, if_exists='append')
+        return df2.to_sql(name = 'education_kz', con=engine, if_exists='append')
 
     extract = extract_data()
     transform = transform_data(extract)
