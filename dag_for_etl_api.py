@@ -26,7 +26,7 @@ def etl_process():
         url = ('http://universities.hipolabs.com/search?country=Kazakhstan')
         response = r.get(url)
         if response.status_code == 200:
-            data = json.loads(response)
+            data = json.loads(response.text)
         print(data)
         return data
 
