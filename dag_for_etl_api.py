@@ -7,15 +7,15 @@ import json
 default_args = {
     'owner': 'darya_kondratovich',
     'retries': 10, 
-    'retry_delay': timedelta(minutes=5)
+    'retry_delay': timedelta(minutes=1)
 }
 @dag(
     'ETL_process_new',
     default_args=default_args,
     description='A simple tutorial ETL',
-    schedule='5 * * * *',
+    schedule='@daily',
     catchup=False,
-    start_date=pendulum.datetime(2023, 3, 1, tz='Europe/Moscow')
+    start_date=pendulum.datetime(2023, 4, 10, tz='Europe/Moscow')
 ) 
 def etl_process():
 
@@ -23,13 +23,9 @@ def etl_process():
     def extract_data():
         import requests as r
 
-        url = ('http://universities.hipolabs.com/search?country=Kazakhstan')
-        response = r.get(url)
+        response = r.get('http://universities.hipolabs.com/search?country=Kazakhstan')
         if response.status_code == 200:
-            data = json.loads(response.text)
-        print(data)
-        return data
-
+            return response.json()
 
     @task()  
     def transform_data(df):
